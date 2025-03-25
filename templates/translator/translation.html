@@ -1,47 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hingo Translate</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-</head>
-<body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <h1>Hingo Translate</h1>
-            </div>
-            <div class="nav">
-                <a href="#" class="about-btn">About</a>
-            </div>
-        </header>
+{% extends 'base.html' %}
+
+{% block title %}Hingo Translate{% endblock %}
+
+{% block content %}
+<main>
+    <div class="translation-container">
+        <div class="icon-container">
+            {% load static %}
+            <img src="{% static 'images/globe_icon.png' %}" alt="Translation Globe" class="globe-icon">
+        </div>
         
-        <main>
-            <div class="translation-container">
-                <div class="icon-container">
-                    <img src="{% static 'images/globe_icon.png' %}" alt="Translation Globe" class="globe-icon">
-                </div>
-                
-                <h2 class="language-title">Hinglish – English</h2>
-                
-                <p class="instruction-text">Type in Hinglish to translate to English.</p>
-                
-                <div class="translation-boxes">
-                    <div class="text-box-container">
-                        <textarea class="text-box input-box" placeholder="Enter text in Hinglish"></textarea>
-                    </div>
-                    <div class="text-box-container">
-                        <textarea class="text-box output-box" placeholder="Translation will appear here" readonly></textarea>
-                    </div>
-                </div>
-                
-                <div class="button-container">
-                    <button class="translate-btn">Translate</button>
-                </div>
+        <h2 class="language-title">Hinglish – English</h2>
+        
+        <p class="instruction-text">Type in Hinglish to translate to English.</p>
+        
+        <div class="translation-boxes">
+            <div class="text-box-container">
+                <textarea class="text-box input-box" placeholder="Enter text in Hinglish"></textarea>
             </div>
-        </main>
+            <div class="text-box-container">
+                <textarea class="text-box output-box" placeholder="Translation will appear here" readonly></textarea>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button class="btn-clean rounded-pill px-4">Translate</button>
+        </div>
     </div>
-</body>
-</html>
+</main>
+{% endblock %}

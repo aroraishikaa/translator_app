@@ -8,6 +8,7 @@
 
 body {
   background-color: #f5f8fa;
+  padding-top: 72px; /* Add padding for fixed navbar */
 }
 
 .container {
@@ -17,33 +18,103 @@ body {
   padding: 20px;
 }
 
-/* Header Styles */
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid #e1e1e1;
+/* Navbar Styles - New Age Template inspired */
+#mainNav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transition: background-color 0.2s ease;
 }
 
-.logo h1 {
+#mainNav .navbar-brand {
   color: #2d3b55;
-  font-size: 28px;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1.5rem;
 }
 
-.about-btn {
-  display: inline-block;
-  padding: 10px 25px;
-  background-color: #e99b72;
-  color: white;
-  text-decoration: none;
-  border-radius: 30px;
-  font-weight: bold;
+#mainNav .navbar-toggler {
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.75rem;
+  color: #212529;
+  border: 1px solid #212529;
 }
 
-.about-btn:hover {
-  background-color: #d59572;
+#mainNav .navbar-nav .nav-item .nav-link {
+  color: #6c757d;
+  font-weight: 500;
+  font-size: 0.9rem;
+  padding: 0.75rem 0;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link:hover,
+#mainNav .navbar-nav .nav-item .nav-link:active {
+  color: #2d3b55;
+}
+
+#mainNav.navbar-shrink {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+
+.btn-primary {
+  background-color: #2d3b55;
+  border-color: #2d3b55;
+}
+
+.btn-primary:hover {
+  background-color: #3a4c6b;
+  border-color: #3a4c6b;
+}
+
+@media (min-width: 992px) {
+  #mainNav {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    border: none;
+    background-color: transparent;
+    transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+  }
+  
+  #mainNav .navbar-brand {
+    color: rgba(45, 59, 85, 0.9);
+  }
+  
+  #mainNav .navbar-brand:hover {
+    color: #2d3b55;
+  }
+  
+  #mainNav .navbar-nav .nav-item .nav-link {
+    padding: 0 1rem !important;
+    color: rgba(45, 59, 85, 0.7);
+  }
+  
+  #mainNav .navbar-nav .nav-item .nav-link:hover {
+    color: #2d3b55;
+  }
+  
+  #mainNav.navbar-shrink {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #fff;
+  }
+  
+  #mainNav.navbar-shrink .navbar-brand {
+    color: #2d3b55;
+  }
+  
+  #mainNav.navbar-shrink .navbar-brand:hover {
+    color: #3a4c6b;
+  }
+  
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link {
+    color: #6c757d;
+  }
+  
+  #mainNav.navbar-shrink .navbar-nav .nav-item .nav-link:hover {
+    color: #2d3b55;
+  }
 }
 
 /* Main Content Styles */
@@ -51,7 +122,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 30px 0;
+  padding: 70px 0 30px 0;
 }
 
 .icon-container {
@@ -109,29 +180,38 @@ header {
   margin-top: 10px;
 }
 
-.translate-btn {
-  padding: 15px 40px;
-  background-color: #2d3b55;
+/* Clean Button Style (matching the image) */
+.btn-clean {
+  background-color: #37447e;
   color: white;
   border: none;
-  border-radius: 25px;
-  font-size: 18px;
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 12px 30px;
+  height: 45px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.translate-btn:hover {
-  background-color: #3a4c6b;
+.btn-clean:hover {
+  background-color: #2d3b6e;
+}
+
+.btn-clean:active {
+  background-color: #2a3566;
 }
 
 /* Responsive Styles */
 @media (max-width: 768px) {
   .translation-boxes {
-      flex-direction: column;
+    flex-direction: column;
   }
   
   .text-box-container {
-      width: 100%;
-      margin-bottom: 20px;
+    width: 100%;
+    margin-bottom: 20px;
   }
 }
