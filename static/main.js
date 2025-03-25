@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle translate button click event
-    const translateBtn = document.querySelector('.btn-clean');
+    const translateBtn = document.querySelector('.translation-container .btn-clean');
     if (translateBtn) {
         translateBtn.addEventListener('click', function() {
             const inputText = document.querySelector('.input-box').value;
