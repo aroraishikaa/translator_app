@@ -21,5 +21,6 @@ from translator import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.translation, name='translation'),
-    path('about/', views.about, name='about')
+    path('about/', views.about, name='about'),
+    path('api/translate/', views.translate_text, name='translate_text'),
 ]

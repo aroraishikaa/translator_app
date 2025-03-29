@@ -42,13 +42,76 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Handle translate button click event
-    const translateBtn = document.querySelector('.translation-container .btn-clean');
+    const translateBtn = document.querySelector('.button-container .btn');
     if (translateBtn) {
         translateBtn.addEventListener('click', function() {
-            const inputText = document.querySelector('.input-box').value;
-            // This is a placeholder for the actual translation functionality
-            // You would typically call an API endpoint here
-            document.querySelector('.output-box').value = "Translation will be implemented here";
+            // Get the input text
+            const inputBox = document.querySelector('.input-box');
+            const outputBox = document.querySelector('.output-box');
+            const inputText = inputBox.value.trim();
+            
+            // Don't proceed if input is empty
+            if (!inputText) {
+                outputBox.value = "Please enter some text to translate";
+                return;
+            }
+            
+            // Show loading indicator
+            outputBox.value = "Translating...";
+            translateBtn.disabled = true;
+            
+            // Make API request to our Django backend
+            fetch('/api/translate/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCsrfToken(),  // Function to get CSRF token defined below
+                },
+                body: JSON.stringify({
+                    text: inputText
+                })
+            })
+            .then(response => {
+                // Check if response is ok
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Display the translation
+                if (data.translation) {
+                    outputBox.value = data.translation;
+                } else if (data.error) {
+                    outputBox.value = "Error: " + data.error;
+                }
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('Error:', error);
+                outputBox.value = "Translation failed. Please try again later.";
+            })
+            .finally(() => {
+                // Re-enable the button
+                translateBtn.disabled = false;
+            });
         });
+    }
+    
+    // Function to get CSRF token from cookies
+    function getCsrfToken() {
+        const name = 'csrftoken';
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 });
