@@ -32,10 +32,13 @@ def translate_text(request):
         # Call the translation service
         translated_text = translate_hinglish_to_english(input_text)
         
+        # Check if there was an error in the translation service
+        if translated_text.startswith('Error:'):
+            return JsonResponse({'error': translated_text[7:]}, status=500)
+        
         # Return the translated text
         return JsonResponse({'translation': translated_text})
         
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
-    except Exception as e:
-        return JsonResponse({'error': str(e)}, status=500)
+    
