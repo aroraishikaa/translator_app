@@ -1,5 +1,4 @@
 /**
- * Hingo Translate - Main JavaScript
  * Handles translation functionality
  */
 
@@ -21,44 +20,31 @@ function setupTranslationUI() {
         return; // Not on the translation page
     }
 
-    // Character limit for input text
-    const MAX_CHAR_LIMIT = 500;
-    
-    // Add input event listener to check character limit
-    inputBox.addEventListener('input', function() {
-        // Check if input exceeds character limit
-        if (inputBox.value.length > MAX_CHAR_LIMIT) {
-            // Trim input to max character limit
-            inputBox.value = inputBox.value.substring(0, MAX_CHAR_LIMIT);
-            // Display a message
-            outputBox.value = `Character limit of ${MAX_CHAR_LIMIT} reached. Please ensure your text is within the limit.`;
-        }
-    });
-    
     translateBtn.addEventListener('click', async function() {
+        // Get input text and remove whitespace from both ends
         const inputText = inputBox.value.trim();
         
-        // Don't proceed if input is empty
+        // Validate input to ensure it is not empty: show message and exit if empty
         if (!inputText) {
             outputBox.value = "Please enter some text to translate";
             return;
         }
         
-        // Show loading indicator
+        // Give user feedback that the transaltion is in progress: (1) show loading indicator (2) disable button to prevent multiple submissions
         outputBox.value = "Translating...";
         translateBtn.disabled = true;
         
-        // Call translation service
+        // Send text to backend API and await response
         const result = await translateText(inputText);
         
-        // Display the translation result
+        // Update output box with translation or error message
         if (result.translation) {
             outputBox.value = result.translation;
         } else if (result.error) {
             outputBox.value = "Error: " + result.error;
         }
         
-        // Re-enable the button
+        // Re-enable the button after translation is complete
         translateBtn.disabled = false;
     });
 }
@@ -69,33 +55,38 @@ function setupTranslationUI() {
  * @returns {Promise} - Promise that resolves with the translation result
  */
 async function translateText(text) {
+    // Validate: return error object if text is empty or only whitespace
     if (!text || !text.trim()) {
-        return { error: 'Please enter some text to translate' };
+      return { error: 'Please enter some text to translate' };
     }
     
     try {
-        const response = await fetch('/api/translate/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRFToken': getCsrfToken(),
-            },
-            body: JSON.stringify({
-                text: text
-            })
-        });
-        
-        // Check if response is ok
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        
-        return await response.json();
+      // Make API request to the Django backend
+      const response = await fetch('/api/translate/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': getCsrfToken(),  // Add CSRF protection
+        },
+        body: JSON.stringify({
+          text: text
+        })
+      });
+      
+      // Handle HTTP error responses (non-200 status codes)
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      
+      // Parse and return the JSON response
+      return await response.json();
+      
     } catch (error) {
-        console.error('Translation error:', error);
-        return { error: 'Translation failed. Please try again later.' };
+      // Log error for debugging and return user-friendly message
+      console.error('Translation error:', error);
+      return { error: 'Translation failed. Please try again later.' };
     }
-}
+  }
 
 /**
  * Gets the CSRF token from cookies
@@ -105,16 +96,22 @@ function getCsrfToken() {
     const name = 'csrftoken';
     let cookieValue = null;
     
+    // Only process if cookies exist
     if (document.cookie && document.cookie !== '') {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
+      // Split the cookie string into individual cookies
+      const cookies = document.cookie.split(';');
+      
+      // Search through cookies for the CSRF token
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Check if this cookie is the CSRF token
+        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          // Extract and decode the token value
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
         }
+      }
     }
     
     return cookieValue;
-}
+  }
