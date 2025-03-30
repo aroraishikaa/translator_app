@@ -20,6 +20,20 @@ function setupTranslationUI() {
     if (!translateBtn || !inputBox || !outputBox) {
         return; // Not on the translation page
     }
+
+    // Character limit for input text
+    const MAX_CHAR_LIMIT = 500;
+    
+    // Add input event listener to check character limit
+    inputBox.addEventListener('input', function() {
+        // Check if input exceeds character limit
+        if (inputBox.value.length > MAX_CHAR_LIMIT) {
+            // Trim input to max character limit
+            inputBox.value = inputBox.value.substring(0, MAX_CHAR_LIMIT);
+            // Display a message
+            outputBox.value = `Character limit of ${MAX_CHAR_LIMIT} reached. Please ensure your text is within the limit.`;
+        }
+    });
     
     translateBtn.addEventListener('click', async function() {
         const inputText = inputBox.value.trim();

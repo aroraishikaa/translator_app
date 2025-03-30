@@ -5,17 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hingo Translate{% endblock %}</title>
     {% load static %}
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Global styles -->
-    <link rel="stylesheet" href="{% static 'main.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}?v={% now 'U' %}">
     
     <!-- Page-specific styles - loaded based on the current page -->
     {% if request.path == '/' %}
-    <link rel="stylesheet" href="{% static 'translation.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/translation.css' %}?v={% now 'U' %}">
     {% elif '/about/' in request.path %}
-    <link rel="stylesheet" href="{% static 'about.css' %}?v={% now 'U' %}">
+    <link rel="stylesheet" href="{% static 'css/about.css' %}?v={% now 'U' %}">
     {% endif %}
     
     {% block extra_css %}{% endblock %}
@@ -32,8 +33,7 @@
         {% block content %}{% endblock %}
     </div>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <!-- Main JavaScript module with ES6 import/export support -->
+    <!-- Custom JavaScript -->
     <script src="{% static 'js/main.js' %}?v={% now 'U' %}"></script>
     {% block extra_js %}{% endblock %}
 </body>
