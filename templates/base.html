@@ -21,6 +21,9 @@
     {% block extra_css %}{% endblock %}
 </head>
 <body>
+    <!-- Add CSRF token here -->
+    {% csrf_token %}
+    
     <!-- Navigation -->
     {% include 'includes/navbar.html' %}
     

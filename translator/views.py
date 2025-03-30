@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 import json
 from .translator_service import translate_hinglish_to_english
@@ -17,7 +16,6 @@ def about(request):
     """
     return render(request, 'translator/about.html')
 
-@csrf_exempt  # For simplicity, but consider using proper CSRF protection in production
 @require_POST
 def translate_text(request):
     """
