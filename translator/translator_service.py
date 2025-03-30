@@ -19,7 +19,11 @@ def translate_hinglish_to_english(text):
         
     # Get model from settings
     model_name = settings.OPENAI_MODEL
-        
+    
+    if not model_name:
+        return "Error: OpenAI model not configured"
+    
+    # Initialize the OpenAI client with our API key  
     client = OpenAI(api_key=api_key)
     
     # Create a chat completion with the configured model
