@@ -55,11 +55,6 @@ function setupTranslationUI() {
  * @returns {Promise} - Promise that resolves with the translation result
  */
 async function translateText(text) {
-    // Validate: return error object if text is empty or only whitespace
-    if (!text || !text.trim()) {
-      return { error: 'Please enter some text to translate' };
-    }
-    
     try {
       // Make API request to the Django backend
       const response = await fetch('/api/translate/', {

@@ -27,7 +27,7 @@ def translate_text(request):
         input_text = data.get('text', '')
         
         if not input_text:
-            return JsonResponse({'error': 'No text provided'}, status=400)
+            return JsonResponse({'translation': 'Please enter some text to translate'})
         
         # Call the translation service
         translated_text = translate_hinglish_to_english(input_text)
