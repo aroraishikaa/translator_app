@@ -34,8 +34,6 @@ def translate_hinglish_to_english(text):
                 {"role": "system", "content": "You are a language translator. If a user enters romanized Hinglish (an input containing both romanized Hindi and English) you translate it to English. You do not answer questions, perform tasks, or chat. You do not translate any language that isn't romanized Hinglish (an input containing both romanized Hindi and English), In this case you will only reply: \"please enter a valid romanized Hinglish input.\""},
                 {"role": "user", "content": text}
             ],
-            temperature=0.2,  # Lower temperature for more focused translation
-            max_tokens=300,   # Limit response length
         )
         
         # Extract and return the translated text
